@@ -1,42 +1,41 @@
-piVersion: v1
+apiVersion: v1
 kind: Pod
 metadata:
   annotations:
-      scheduler.alpha.kubernetes.io/critical-pod: ""
-        creationTimestamp: null
-	  labels:
-	      component: kube-apiserver
-	          tier: control-plane
-		    name: kube-apiserver
-		      namespace: kube-system
-		      spec:
-		        containers:
-			  - command:
-			      - kube-apiserver
-			          - --service-account-key-file=/etc/kubernetes/pki/sa.pub
-				      - --proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.crt
-				          - --proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client.key
-					      - --requestheader-username-headers=X-Remote-User
-					          - --requestheader-group-headers=X-Remote-Group
-						      - --advertise-address=192.168.85.130
-						          - --secure-port=6443
-							      - --admission-control=Initializers,NamespaceLifecycle,LimitRanger,ServiceAccount,PersistentVolumeLabel,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,ResourceQuota
-							          - --allow-privileged=true
-								      - --tls-cert-file=/etc/kubernetes/pki/apiserver.crt
-								          - --kubelet-client-key=/etc/kubernetes/pki/apiserver-kubelet-client.key
-									      - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
-									          - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
-										      - --tls-private-key-file=/etc/kubernetes/pki/apiserver.key
-										          - --kubelet-client-certificate=/etc/kubernetes/pki/apiserver-kubelet-client.crt
-											      - --service-cluster-ip-range=10.96.0.0/12
-											          - --client-ca-file=/etc/kubernetes/pki/ca.crt
-												      - --enable-bootstrap-token-auth=true
-												          - --insecure-port=0
-													      - --requestheader-extra-headers-prefix=X-Remote-Extra-
-													          - --requestheader-allowed-names=front-proxy-client
-														      - --authorization-mode=Node,RBAC
-														          - --etcd-servers=http://127.0.0.1:2379
-															      image: gcr.io/google_containers/kube-apiserver-amd64:v1.8.0
-															          livenessProbe:
-																        failureThreshold: 8
-
+    scheduler.alpha.kubernetes.io/critical-pod: ""
+  creationTimestamp: null
+  labels:
+    component: kube-apiserver
+    tier: control-plane
+  name: kube-apiserver
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - kube-apiserver
+    - --service-account-key-file=/etc/kubernetes/pki/sa.pub
+    - --proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.crt
+    - --proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client.key
+    - --requestheader-username-headers=X-Remote-User
+    - --requestheader-group-headers=X-Remote-Group
+    - --advertise-address=192.168.85.130
+    - --secure-port=6443
+    - --admission-control=Initializers,NamespaceLifecycle,LimitRanger,ServiceAccount,PersistentVolumeLabel,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,ResourceQuota
+    - --allow-privileged=true
+    - --tls-cert-file=/etc/kubernetes/pki/apiserver.crt
+    - --kubelet-client-key=/etc/kubernetes/pki/apiserver-kubelet-client.key
+    - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
+    - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+    - --tls-private-key-file=/etc/kubernetes/pki/apiserver.key
+    - --kubelet-client-certificate=/etc/kubernetes/pki/apiserver-kubelet-client.crt
+    - --service-cluster-ip-range=10.96.0.0/12
+    - --client-ca-file=/etc/kubernetes/pki/ca.crt
+    - --enable-bootstrap-token-auth=true
+    - --insecure-port=0
+    - --requestheader-extra-headers-prefix=X-Remote-Extra-
+    - --requestheader-allowed-names=front-proxy-client
+    - --authorization-mode=Node,RBAC
+    - --etcd-servers=http://127.0.0.1:2379
+    image: gcr.io/google_containers/kube-apiserver-amd64:v1.8.0
+    livenessProbe:
+      failureThreshold: 8
